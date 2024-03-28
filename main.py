@@ -215,7 +215,7 @@ if decrypt_button:
 
         predictions = []
         for i in range(5):
-            value_to_find = int(enc_ans.decrypt()[i])
+            value_to_find = round(enc_ans.decrypt()[i])
             key_found = get_key_from_value(class_map, value_to_find)
             predictions.append(key_found)
 
