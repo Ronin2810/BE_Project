@@ -224,6 +224,6 @@ if decrypt_button:
     # Colab Code here
         st.success("Decryption successful!")
         # st.write("Diagnosis:", prediction)
-        st.write("Diagnosis:", predictions)
+        st.write("Diagnosis (Top 5):", predictions)
     else:
         st.error("Wrong Decryption Key")
