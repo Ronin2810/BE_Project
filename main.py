@@ -58,8 +58,8 @@ def vectorize_text(tokens):
         return [0] * 1000
 
 def apply_ckks_vector(entry):
-    	st.session_state['ckks_vec_state'] = ts.ckks_vector(context, entry)
-    	return st.session_state['ckks_vec_state']
+    st.session_state['ckks_vec_state'] = ts.ckks_vector(context, entry)
+    return st.session_state['ckks_vec_state']
 
 def ckks_dot(vector,W_xh):
   result=[]
@@ -155,7 +155,6 @@ with st.form("encryption_form"):
 
 if send_key_button:
     encryption_key=generate_code_encryption()
-    print("encryption key before sending email - ",encryption_key)
     send_email('adityapatildev2810@gmail.com', 'iopw ecxc jrgi fubf', email, "Encryption Key", f"Your Encryption key is: {encryption_key}")
     st.success("Encryption Key sent to your Email!")
 
@@ -172,17 +171,13 @@ decryption_key=generate_code_decryption()
 # Perform encryption
 ckks_vec = np.array([])
 if encrypt_button:
-    print("encryption key is-",encryption_key)
-    print(encryption_key_input)
     if encryption_key_input==encryption_key and encryption_key!='':
         # Vectorize and encrypt the transcript here
-        print("Transcript: ",transcript)
         tokens = preprocess_text(transcript)
         vector = vectorize_text(tokens)
         ckks_vec = apply_ckks_vector(vector)
         st.success("Encryption Successful!")
 
-        print(decryption_key)
         send_email('adityapatildev2810@gmail.com', 'iopw ecxc jrgi fubf', email, "Decryption Key", f"Your Decryption key is: {decryption_key}")
         st.success("Decryption Key for inference sent to your Email!")
     else:
@@ -203,22 +198,32 @@ if decrypt_button:
     if decryption_key_input==decryption_key and decryption_key!="":
     # Assuming decryption process and prediction retrieval here
 
-        print(st.session_state['ckks_vec_state'].decrypt())
         outputs = forward_enc([st.session_state['ckks_vec_state']],W_xh,W_hh,W_hy,b_h,b_y)
         outs = outputs[-1].reshape(40)
-        predicted_class = [np.argmax(outs)]
-        enc_ans = apply_ckks_vector(predicted_class)
-        print(st.session_state['ckks_vec_state'].decrypt())
+        # predicted_class = [np.argmax(outs)]
+        # enc_ans = apply_ckks_vector(predicted_class)
+
+        predicted_classes = np.argsort(outputs[-1])[-5:][::-1] 
+        enc_ans = apply_ckks_vector(predicted_classes)
+        
         with open('class_map.pkl', 'rb') as pickle_file:
             class_map = pickle.load(pickle_file)
         
-        value_to_find = int(enc_ans.decrypt()[0])
-        key_found = get_key_from_value(class_map, value_to_find)
+        # value_to_find = int(enc_ans.decrypt()[0])
+        # key_found = get_key_from_value(class_map, value_to_find)
+        # prediction = key_found
 
-        prediction = key_found
+        predictions = []
+        for i in range(5):
+            value_to_find = int(enc_ans.decrypt()[i])
+            key_found = get_key_from_value(class_map, value_to_find)
+            predictions.append(key_found)
+
+
         st.success("Inference Completed!")
     # Colab Code here
         st.success("Decryption successful!")
-        st.write("Diagnosis:", prediction)
+        # st.write("Diagnosis:", prediction)
+        st.write("Diagnosis:", predictions)
     else:
         st.error("Wrong Decryption Key")
