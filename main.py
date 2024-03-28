@@ -203,7 +203,7 @@ if decrypt_button:
         # predicted_class = [np.argmax(outs)]
         # enc_ans = apply_ckks_vector(predicted_class)
 
-        predicted_classes = np.array(np.argsort(outputs[-1])[-5:]) 
+        predicted_classes = np.array(np.argsort(outs)[-5:]) 
         enc_ans = apply_ckks_vector(predicted_classes)
         
         with open('class_map.pkl', 'rb') as pickle_file:
