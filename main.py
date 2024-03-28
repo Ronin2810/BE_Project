@@ -78,7 +78,7 @@ def softmax(x):
         return exp_x / exp_x.sum(axis=0, keepdims=True)
 
 def forward_enc(inputs,W_xh,W_hh,W_hy,b_h,b_y):
-        h_t = np.zeros((32, 1)) # 128 is the hidden size
+        h_t = np.zeros((16, 1)) # 16 is the hidden size
         hidden_states = [] # not needed
         outputs = []
         for x in inputs:
