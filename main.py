@@ -12,8 +12,7 @@ from nltk.corpus import stopwords
 import tenseal as ts
 import numpy as np
 import pickle
-import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 custom_stopwords = set([
     'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll",
@@ -227,15 +226,13 @@ if decrypt_button:
         st.success("Decryption successful!")
         # st.write("Diagnosis:", prediction)
         st.write("Diagnosis (Top 5):", predictions)
-        x_values = np.arange(len(outs))
 
-    # Plot the bar graph
+    # Plot the bar graph with Seaborn
+        x_values = np.arange(len(outs))
         fig, ax = plt.subplots()
-        ax.bar(x_values, outs)
+        sns.barplot(x=x_values, y=data, ax=ax)
         ax.set_xlabel('Index')
         ax.set_ylabel('Value')
-        ax.set_title('Bar Graph of Predictions Array')
-        
         # Show plot in Streamlit
         st.pyplot(fig)
     else:
