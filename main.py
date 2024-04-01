@@ -12,6 +12,8 @@ from nltk.corpus import stopwords
 import tenseal as ts
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
+
 
 custom_stopwords = set([
     'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll",
@@ -225,5 +227,16 @@ if decrypt_button:
         st.success("Decryption successful!")
         # st.write("Diagnosis:", prediction)
         st.write("Diagnosis (Top 5):", predictions)
+        x_values = np.arange(len(outs))
+
+    # Plot the bar graph
+        fig, ax = plt.subplots()
+        ax.bar(x_values, outs)
+        ax.set_xlabel('Index')
+        ax.set_ylabel('Value')
+        ax.set_title('Bar Graph of Predictions Array')
+
+        # Show plot in Streamlit
+        st.pyplot(fig)
     else:
         st.error("Wrong Decryption Key")
