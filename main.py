@@ -13,6 +13,8 @@ import tenseal as ts
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
+from scipy.interpolate import make_interp_spline
+
 
 
 custom_stopwords = set([
@@ -235,7 +237,11 @@ if decrypt_button:
         ax.set_xlabel('Index')
         ax.set_ylabel('Value')
         ax.set_title('Bar Graph of Predictions Array')
-
+        # Smooth line touching top points of bars
+        x_smooth = np.linspace(x_values.min(), x_values.max(), 300)
+        spl = make_interp_spline(x_values, outs, k=3)
+        y_smooth = spl(x_smooth)
+        ax.plot(x_smooth, y_smooth, color='red', label='Smooth Distribution Curve')
         # Show plot in Streamlit
         st.pyplot(fig)
     else:
