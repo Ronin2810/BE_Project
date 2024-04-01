@@ -234,7 +234,7 @@ if decrypt_button:
         sns.barplot(x=x_values, y=outs, ax=ax)
         ax.set_xlabel('Index')
         ax.set_ylabel('Value')
-        ax.tick_params(axis='x', labelsize=8)
+        ax.tick_params(axis='x', labelsize=5)
         # Show plot in Streamlit
         st.pyplot(fig)
     else:
