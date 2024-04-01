@@ -13,6 +13,7 @@ import tenseal as ts
 import numpy as np
 import pickle
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 custom_stopwords = set([
     'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll",
@@ -230,7 +231,7 @@ if decrypt_button:
     # Plot the bar graph with Seaborn
         x_values = np.arange(len(outs))
         fig, ax = plt.subplots()
-        sns.barplot(x=x_values, y=data, ax=ax)
+        sns.barplot(x=x_values, y=outs, ax=ax)
         ax.set_xlabel('Index')
         ax.set_ylabel('Value')
         # Show plot in Streamlit
