@@ -140,6 +140,8 @@ def generate_code_decryption():
 
 # Streamlit UI components
 st.title("BE Project")
+st.set_page_config(page_title="BE Project")
+
 
 encryption_key=generate_code_encryption()
 transcript=''
