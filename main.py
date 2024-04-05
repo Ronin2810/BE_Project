@@ -237,6 +237,6 @@ if decrypt_button:
         ax.set_ylabel('Value')
         ax.tick_params(axis='x', labelsize=5)
         # Show plot in Streamlit
-        st.pyplot(fig)
+        # st.pyplot(fig)
     else:
         st.error("Wrong Decryption Key")
