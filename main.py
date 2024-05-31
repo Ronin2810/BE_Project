@@ -224,11 +224,6 @@ if decrypt_button:
 
 
         st.success("Inference Completed!")
-    # Colab Code here
-        st.success("Decryption successful!")
-        # st.write("Diagnosis:", prediction)
-        st.write("Diagnosis (Top 5):", predictions)
-
     # Plot the bar graph with Seaborn
         x_values = np.arange(len(outs))
         fig, ax = plt.subplots()
@@ -238,5 +233,10 @@ if decrypt_button:
         ax.tick_params(axis='x', labelsize=5)
         # Show plot in Streamlit
         st.pyplot(fig)
+    # Colab Code here
+        st.success("Decryption successful!")
+        # st.write("Diagnosis:", prediction)
+        st.write("Diagnosis (Top 5):", predictions)
+
     else:
         st.error("Wrong Decryption Key")
